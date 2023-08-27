@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'thirdPage.dart';
+import 'options.dart';
 import 'cadastro.dart';
 
 // Classe que instância classe responsável por gerenciar estados
@@ -21,12 +21,11 @@ class FormsState extends State<Login> {
   Color textColorWarning = Colors.grey; // default color
   Color borderColor = Colors.grey;
 
-  String _resultEmail = "";
-  String _resultPassword = "";
   String _errorMessage = "";
   bool envio = false;
   bool next = false;
 
+/*
   // simula envia de informação
   void _enviar() {
     String email = _email.text;
@@ -59,8 +58,6 @@ class FormsState extends State<Login> {
         // altera cor do texto
         changeTextColor(Colors.red);
         // altera mensagem
-        _resultEmail = "Campo email obrigatório";
-        _resultPassword = "Campo Senha obrigatorio";
         // alterar cor da borda
         changeBorderColor(Colors.red);
       } else {
@@ -68,39 +65,37 @@ class FormsState extends State<Login> {
         changeEnvio(true);
         changeTextColor(Colors.blue);
         changeBorderColor(Colors.grey);
-        _resultEmail = email;
-        _resultPassword = password;
       }
+    });
+  }
+  */
+
+  void changeNext(bool e) {
+    setState(() {
+      next = e;
+    });
+  }
+
+  void changeBorderColor(Color newColor) {
+    setState(() {
+      borderColor = newColor;
+    });
+  }
+
+  void changeTextColor(Color newColor) {
+    setState(() {
+      textColor = newColor;
     });
   }
 
   void _navegarParaHome() {
-    void changeNext(bool e) {
-      setState(() {
-        next = e;
-      });
-    }
-
-    // altera cor da borda
-    void changeBorderColor(Color newColor) {
-      setState(() {
-        borderColor = newColor;
-      });
-    }
-
-    void changeTextColor(Color newColor) {
-      setState(() {
-        textColor = newColor;
-      });
-    }
-
     String email = _email.text;
     String password = _password.text;
     changeNext(true);
     if (email != "" && password != "") {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const ThirdPage()),
+        MaterialPageRoute(builder: (context) => const Options()),
       );
     } else {
       _errorMessage = "Por favor preencha os campos";
