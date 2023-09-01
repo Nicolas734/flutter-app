@@ -28,17 +28,14 @@ class Usuarios extends StatefulWidget {
 
 List<dynamic> data = [];
 
-
-
 class FormsState extends State<Usuarios> {
-
   @override
   void initState() {
     super.initState();
     fetchData(); // Chame a função fetchData no momento apropriado, como o initState.
   }
 
-    Future<void> fetchData() async {
+  Future<void> fetchData() async {
     final response =
         await http.get(Uri.parse('https://demo1810860.mockable.io/users'));
     if (response.statusCode == 200) {
@@ -63,7 +60,8 @@ class FormsState extends State<Usuarios> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(height: 100.0),
-            const Text('Usuarios cadastrados', style: TextStyle(fontSize: 25.0)),
+            const Text('Usuarios cadastrados',
+                style: TextStyle(fontSize: 25.0)),
             const SizedBox(height: 50.0),
             Container(
               width: 400,

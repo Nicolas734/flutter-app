@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Produtos extends StatefulWidget {
   const Produtos({super.key});
@@ -7,12 +9,35 @@ class Produtos extends StatefulWidget {
   FormsState createState() => FormsState();
 }
 
-List<dynamic> data = [
-  {"id": 1, "name": "Pendrive", "preco": 19.00, "qtd": 2},
-  {"id": 2, "name": "cyberpunk 2077", "preco": 59.99, "qtd": 10}
-];
+// List<dynamic> data = [
+//   {"id": 1, "name": "Pendrive", "preco": 19.00, "qtd": 2},
+//   {"id": 2, "name": "cyberpunk 2077", "preco": 59.99, "qtd": 10}
+// ];
+
+List<dynamic> data = [];
 
 class FormsState extends State<Produtos> {
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData(); // Chame a função fetchData no momento apropriado, como o initState.
+  }
+
+  Future<void> fetchData() async {
+    final response =
+        await http.get(Uri.parse('https://demo1810860.mockable.io/products'));
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      setState(() {
+        data = jsonResponse;
+      });
+    } else {
+      print("Request Fail: ${response.statusCode}");
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +79,7 @@ class FormsState extends State<Produtos> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Nome: ${item['name']}',
+                                    Text('Nome: ${item['nome']}',
                                         style: const TextStyle(
                                             fontSize: 18.0,
                                             fontWeight: FontWeight.bold)),
