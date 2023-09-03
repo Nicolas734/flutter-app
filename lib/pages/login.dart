@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'options.dart';
 import 'cadastro.dart';
+import 'package:loadpage/components/custom_app_bar.dart';
 
 // Classe que instância classe responsável por gerenciar estados
 class Login extends StatefulWidget {
@@ -107,10 +108,7 @@ class FormsState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // barra do aplicativo
-        title: const Text('Login'),
-      ),
+      appBar: const CustomAppBar(title: "Login"),
       body: Align(
         // corpo do aplicativo
         alignment: Alignment.topCenter,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'produtos.dart';
 import 'usuarios.dart';
+import 'package:loadpage/components/custom_app_bar.dart';
 
 class Options extends StatefulWidget {
   const Options({super.key});
@@ -13,9 +14,7 @@ class FormsState extends State<Options> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Opções"),
-      ),
+      appBar: const CustomAppBar(title: "Opções"),
       body: Align(
         alignment: Alignment.topCenter,
         child: Column(

@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:loadpage/components/custom_app_bar.dart';
+import 'package:loadpage/components/custom_list_view.dart';
+import 'package:loadpage/interfaces/list_item.dart';
 
 class Produtos extends StatefulWidget {
   const Produtos({super.key});
@@ -9,12 +12,7 @@ class Produtos extends StatefulWidget {
   FormsState createState() => FormsState();
 }
 
-// List<dynamic> data = [
-//   {"id": 1, "name": "Pendrive", "preco": 19.00, "qtd": 2},
-//   {"id": 2, "name": "cyberpunk 2077", "preco": 59.99, "qtd": 10}
-// ];
-
-List<dynamic> data = [];
+List<ProductItem> data = [];
 
 class FormsState extends State<Produtos> {
   @override
@@ -29,7 +27,21 @@ class FormsState extends State<Produtos> {
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       setState(() {
-        data = jsonResponse;
+        data.clear();
+        for (int i = 0; i < jsonResponse.length; i++) {
+          ProductItem item = ProductItem(
+            id: jsonResponse[i]['id'],
+            nome: jsonResponse[i]['nome'],
+            descricao: jsonResponse[i]['descricao'],
+            preco: jsonResponse[i]['preco'],
+            qtd: jsonResponse[i]['qtd'],
+            image: CustomImageInfo(
+              details: jsonResponse[i]['image']['details'],
+              url: jsonResponse[i]['image']['url'],
+            ),
+          );
+          data.add(item);
+        }
       });
     } else {
       print("Request Fail: ${response.statusCode}");
@@ -39,9 +51,7 @@ class FormsState extends State<Produtos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Produtos"),
-      ),
+      appBar: const CustomAppBar(title: 'Produtos'),
       body: Align(
         alignment: Alignment.topCenter,
         child: Column(
@@ -57,59 +67,7 @@ class FormsState extends State<Produtos> {
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey, width: 1.0),
               ),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final item = data[index];
-                  return GestureDetector(
-                    onTap: () {
-                      print("Item ${index + 1}");
-                    },
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image(
-                                      image: NetworkImage( item['image']['details'] ? '${item['image']['url']}' : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlr4E2Wi_Gr-wISdg0Id5QkBczUHitf4vaaOSZ8yl4x7gwkWBkEZNMXPjf4ytH2NLOV9g&usqp=CAU'),
-                                      height: 100,
-                                      width: 100,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Nome: ${item['nome']}',
-                                            style: const TextStyle(
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.bold)),
-                                        const SizedBox(height: 8.0),
-                                        Text(
-                                            'Preço: ${item['preco'].toStringAsFixed(2)}',
-                                            style: const TextStyle(
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.bold)),
-                                        const SizedBox(height: 8.0),
-                                        Text(
-                                            'Quantidade: ${item['qtd'].toStringAsFixed(2)}',
-                                            style: const TextStyle(
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.bold)),
-                                      ],
-                                    )
-                                  ],
-                                )))),
-                  );
-                },
-              ),
+              child: CustomListView(data: data),
             ),
           ],
         ),

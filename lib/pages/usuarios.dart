@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:loadpage/components/custom_app_bar.dart';
+import 'package:loadpage/interfaces/list_item.dart';
+import 'package:loadpage/components/custom_list_view.dart';
 
 class Usuarios extends StatefulWidget {
   const Usuarios({super.key});
@@ -9,24 +12,7 @@ class Usuarios extends StatefulWidget {
   FormsState createState() => FormsState();
 }
 
-// List<dynamic> data = [
-//   {
-//     "id": 1,
-//     "name": "Nicolas",
-//     "email": "nichollaslimma@gmail.com",
-//     "cpf": "000.000.000-00",
-//     "senha": "senha"
-//   },
-//   {
-//     "id": 2,
-//     "name": "V",
-//     "email": "v2077@gmail.com",
-//     "cpf": "000.000.001-01",
-//     "senha": "silverhand"
-//   }
-// ];
-
-List<dynamic> data = [];
+List<UserItem> data = [];
 
 class FormsState extends State<Usuarios> {
   @override
@@ -41,7 +27,17 @@ class FormsState extends State<Usuarios> {
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       setState(() {
-        data = jsonResponse['data'];
+        data.clear();
+        for(int i = 0; i < jsonResponse.length; i++){
+          UserItem item = UserItem(
+            id: jsonResponse[i]['id'], 
+            nome: jsonResponse[i]['nome'], 
+            email: jsonResponse[i]['email'], 
+            image: CustomImageInfo(details: jsonResponse[i]['image']['details'], url: jsonResponse[i]['image']['url']), 
+            cpf: jsonResponse[i]['cpf']
+          );
+          data.add(item);
+        }
       });
     } else {
       print("Request Fail: ${response.statusCode}");
@@ -51,9 +47,7 @@ class FormsState extends State<Usuarios> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Usuarios"),
-      ),
+      appBar: const CustomAppBar(title: "Usuarios"),
       body: Align(
         alignment: Alignment.topCenter,
         child: Column(
@@ -69,46 +63,7 @@ class FormsState extends State<Usuarios> {
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey, width: 1.0),
               ),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final item = data[index];
-                  return GestureDetector(
-                    onTap: () {
-                      print("Item ${index + 1}");
-                    },
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Nome: ${item['nome']}',
-                                        style: const TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold)),
-                                    const SizedBox(height: 8.0),
-                                    Text('CPF: ${item['cpf']}',
-                                        style: const TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold)),
-                                    const SizedBox(height: 8.0),
-                                    Text('Email: ${item['email']}',
-                                        style: const TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold)),
-                                  ],
-                                )))),
-                  );
-                },
-              ),
+              child: CustomListView(data: data)
             ),
           ],
         ),
