@@ -17,7 +17,6 @@ class Produtos extends StatefulWidget {
 List<dynamic> data = [];
 
 class FormsState extends State<Produtos> {
-
   @override
   void initState() {
     super.initState();
@@ -37,7 +36,6 @@ class FormsState extends State<Produtos> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +48,8 @@ class FormsState extends State<Produtos> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(height: 100.0),
-            const Text('Produtos cadastrados', style: TextStyle(fontSize: 25.0)),
+            const Text('Produtos cadastrados',
+                style: TextStyle(fontSize: 25.0)),
             const SizedBox(height: 50.0),
             Container(
               width: 400,
@@ -76,25 +75,36 @@ class FormsState extends State<Produtos> {
                             ),
                             child: Padding(
                                 padding: const EdgeInsets.all(16.0),
-                                child: Column(
+                                child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Nome: ${item['nome']}',
-                                        style: const TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold)),
-                                    const SizedBox(height: 8.0),
-                                    Text(
-                                        'Preço: ${item['preco'].toStringAsFixed(2)}',
-                                        style: const TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold)),
-                                    const SizedBox(height: 8.0),
-                                    Text(
-                                        'Quantidade: ${item['qtd'].toStringAsFixed(2)}',
-                                        style: const TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold)),
+                                    Image(
+                                      image: NetworkImage( item['image']['details'] ? '${item['image']['url']}' : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlr4E2Wi_Gr-wISdg0Id5QkBczUHitf4vaaOSZ8yl4x7gwkWBkEZNMXPjf4ytH2NLOV9g&usqp=CAU'),
+                                      height: 100,
+                                      width: 100,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Nome: ${item['nome']}',
+                                            style: const TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold)),
+                                        const SizedBox(height: 8.0),
+                                        Text(
+                                            'Preço: ${item['preco'].toStringAsFixed(2)}',
+                                            style: const TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold)),
+                                        const SizedBox(height: 8.0),
+                                        Text(
+                                            'Quantidade: ${item['qtd'].toStringAsFixed(2)}',
+                                            style: const TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                    )
                                   ],
                                 )))),
                   );
