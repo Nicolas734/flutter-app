@@ -10,35 +10,36 @@ class CustomListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
-      itemCount: data.length,
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (BuildContext context, int index) {
-        final item = data[index];
+    return SingleChildScrollView(
+      child: ListView.separated(
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        itemCount: data.length,
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          final item = data[index];
 
-        if (item is UserItem) {
-          return GestureDetector(
-            onTap: () {
-              print("Item ${item.id} (Usuário)");
-            },
-            child: CustomListCardUsuario(
-              item: item,
-            ),
-          );
-        } else if (item is ProductItem) {
-          return GestureDetector(
-            onTap: () {
-              print("Item ${item.id} (Produto)");
-            },
-            child: CustomListCardProduto(
-              item: item,
-            ),
-          );
-        }
-
-      },
+          if (item is UserItem) {
+            return GestureDetector(
+              onTap: () {
+                print("Item ${item.id} (Usuário)");
+              },
+              child: CustomListCardUsuario(
+                item: item,
+              ),
+            );
+          } else if (item is ProductItem) {
+            return GestureDetector(
+              onTap: () {
+                print("Item ${item.id} (Produto)");
+              },
+              child: CustomListCardProduto(
+                item: item,
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }

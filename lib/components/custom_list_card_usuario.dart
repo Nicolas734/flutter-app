@@ -12,7 +12,7 @@ class CustomListCardUsuario extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Image(
-          image: NetworkImage(item.image.details ? item.image.url : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlr4E2Wi_Gr-wISdg0Id5QkBczUHitf4vaaOSZ8yl4x7gwkWBkEZNMXPjf4ytH2NLOV9g&usqp=CAU', scale: 0.5),
+          image: NetworkImage(item.image.details ? item.image.url : 'https://cdn-icons-png.flaticon.com/512/666/666201.png', scale: 0.5),
           height: 90,
           width: 90,
         ),

@@ -4,7 +4,7 @@ import 'package:loadpage/interfaces/list_item.dart';
 class CustomListCardProduto extends StatelessWidget {
   final ProductItem item;
 
-  const CustomListCardProduto({super.key, required this.item});
+  const CustomListCardProduto({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,33 +18,37 @@ class CustomListCardProduto extends StatelessWidget {
           height: 90,
           width: 90,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Nome: ${item.nome}',
-              style: const TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.bold,
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Nome: ${item.nome}',
+                style: const TextStyle(
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 6.0),
-            Text(
-              'Descrição: ${item.descricao}',
-              style: const TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.bold,
+              const SizedBox(height: 6.0),
+              Text(
+                'Descrição: ${item.descricao}',
+                style: const TextStyle(
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.bold,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
-            ),
-            const SizedBox(height: 6.0),
-            Text(
-              'Preço: ${item.preco.toStringAsFixed(2)}',
-              style: const TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.bold,
+              const SizedBox(height: 6.0),
+              Text(
+                'Preço: ${item.preco.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         )
       ],
     );
