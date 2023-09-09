@@ -53,7 +53,7 @@ class FormsState extends State<Usuarios> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 100.0),
+            const SizedBox(height: 50.0),
             const Text('Usuarios cadastrados',
                 style: TextStyle(fontSize: 25.0)),
             const SizedBox(height: 50.0),
