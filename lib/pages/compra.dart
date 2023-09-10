@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loadpage/components/custom_app_bar.dart';
-import 'options.dart'; // Importe a tela "Options" ou substitua pelo nome correto
+import 'options.dart';
+
 
 class Compra extends StatefulWidget {
   final String produto;
@@ -26,10 +27,10 @@ class FormsState extends State<Compra> {
           actions: <Widget>[
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Fechar o AlertDialog
+                Navigator.of(context).pop();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Options()), // Substitua pelo nome correto da tela "Options".
+                  MaterialPageRoute(builder: (context) => const Options()),
                 );
               },
               child: const Text('OK'),
@@ -51,7 +52,7 @@ class FormsState extends State<Compra> {
           children: [
             const SizedBox(height: 50.0),
             const Text('Produto', style: TextStyle(fontSize: 25.0)),
-            const SizedBox(height: 50.0),
+            const SizedBox(height: 40.0),
             SizedBox(
               width: 400,
               height: 600,
