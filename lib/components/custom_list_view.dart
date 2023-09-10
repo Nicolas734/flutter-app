@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loadpage/interfaces/list_item.dart';
+import '../pages/compra.dart';
 import 'custom_list_card_produto.dart';
 import 'custom_list_card_usuario.dart';
 
@@ -32,6 +33,7 @@ class CustomListView extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 print("Item ${item.id} (Produto)");
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Compra(produto: item.nome)));
               },
               child: CustomListCardProduto(
                 item: item,
